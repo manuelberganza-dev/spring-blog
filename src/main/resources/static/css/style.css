@@ -1,0 +1,14 @@
+.fs-75 {
+    font-size: 60px;
+}
+
+.cortar-parrafo {
+    max-height: 4.5em;
+    overflow: hidden;
+    white-space: pre-line;
+    position: relative;
+}
+
+p {
+    margin: 0;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de usuario</title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
+<body>
+
+    <section class="container vh-100 d-flex flex-column justify-content-center">
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-5">
+                <h3 class="text-center">Registro de usuario</h3>
+
+                <form th:action="@{/registro}" method="post" th:object="${usuario}" class="card shadow-sm p-2">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger" >
+                        Por favor, corrija los siguientes errores:
+                        <ul>
+                            <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label fw-bold">Nombres</label>
+                        <input type="text" id="nombre" th:field="*{nombre}" class="form-control" placeholder="Nombres" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="apellidos" class="form-label fw-bold">Apellidos</label>
+                        <input type="text" id="apellidos" th:field="*{apellidos}" class="form-control" placeholder="Apellidos" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-bold">Usuario</label>
+                        <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Nombre de usuario" required/>
+                        <p th:if="${errUsername != null}" class="text-danger" th:text="${errUsername}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-bold">E-mail</label>
+                        <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="E-mail" required/>
+                        <p th:if="${errEmail != null}" class="text-danger" th:text="${errEmail}"></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-bold">Contrasena</label>
+                        <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Contrasena" required/>
+                    </div>
+
+                    <input type="submit" class="btn btn-primary" value="Registrar usuario"/>
+                </form>
+            </div>
+        </div>
+
+    </section>
+
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MiBlog</title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}"  rel="stylesheet"/>
+</head>
+<body>
+    <header th:insert="~{fragments/menu :: menu-principal}"></header>
+
+    <main class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+
+                <div th:each="publicacion : ${publicaciones}" class="card shadow-sm mb-3">
+
+                    <div class="card-body">
+                        <div>
+                            <h3 class="card-title" th:text="${publicacion.titulo}"></h3>
+                            <p class="text-secondary fw-bold" th:text="'@' + ${publicacion.usuario.username}"></p>
+                            <p class="text-secondary" th:text="${publicacion.fecha_publicacion}"></p>
+                        </div>
+                        <div class="card-text cortar-parrafo mb-2" th:utext="${publicacion.descripcion}"></div>
+                        <a class="btn btn-primary" th:href="@{/publicacion/{id} (id=${publicacion.id})}">Seguir leyendo</a>
+                    </div>
+
+                </div>
+
+                <nav th:if="${publicaciones.totalPages > 5}">
+                    <ul class="pagination">
+                        <li class="page-item" th:classappend="${publicaciones.number == 0 ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/(page=${publicaciones.number - 1})}">Anterior</a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${i eq publicaciones.number + 1} ? 'active'" th:each="i : ${#numbers.sequence( 1, publicaciones.totalPages, 1)}">
+                            <a class="page-link" th:href="@{/?page={tmpPag} (tmpPag=${i-1}) }" th:text="${i}" th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+                        </li>
+
+                        <li class="page-item" th:classappend="${publicaciones.number == (publicaciones.totalPages - 1) ? 'disabled' : ''}">
+                            <a class="page-link" th:href="@{/(page=${publicaciones.number + 1})}">Siguiente</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </main>
+
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

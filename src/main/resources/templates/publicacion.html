@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${publicacion.titulo}"></title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}"  rel="stylesheet" />
+</head>
+<body>
+<header th:insert="~{fragments/menu :: menu-principal}"></header>
+
+    <main class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <div>
+                    <h3 class="card-title" th:text="${publicacion.titulo}"></h3>
+                    <p class="text-secondary fw-bold" th:text="'@' + ${publicacion.usuario.username}"></p>
+                    <p class="text-secondary" th:text="${publicacion.fecha_publicacion}"></p>
+                </div>
+                <div class="card-text" th:utext="${publicacion.descripcion}"></div>
+            </div>
+        </div>
+
+        <hr class="border opacity-50" />
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <form th:action="@{/publicacion/{id} (id=${publicacion.id})}" method="post" th:object="${comentario}">
+
+                    <textarea th:field="*{descripcion}" class="form-control mb-2" style="height: 150px;" placeholder="Agregar un comentario"></textarea>
+
+                    <div class="d-flex justify-content-end">
+                        <input class="btn btn-primary" type="submit" value="Enviar" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <section class="container" th:if="${comentarios != null}">
+        <h4 class="text-center">Comentarios</h4>
+        <div th:each="comentario : ${comentarios}" class="row d-flex justify-content-center">
+            <div class="col-8 mb-4">
+                <h6 th:text="${comentario.usuario.nombre} + ' ' + ${comentario.usuario.apellidos}"></h6>
+                <p th:text="${comentario.descripcion}"></p>
+            </div>
+        </div>
+    </section>
+
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

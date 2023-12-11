@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MiBlog</title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
+<body>
+
+    <section class="container vh-100 d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="col-8 d-flex flex-column justify-content-center">
+                <div>
+                    <h1 class="text-primary-emphasis fs-60">MiBlog</h1>
+                    <p>Escribe y publica tus articulos en <span class="fw-bold">MiBlog.</span> </p>
+                </div>
+            </div>
+
+            <div class="col-4 card shadow p-3">
+                <form th:action="@{/login}" method="post" >
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        Usuario o Contrasena incorrectos.
+                    </div>
+
+                    <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+
+                    <div class="mb-3">
+                        <label id="username" class="form-label fw-bold">Usuario</label>
+                        <input type="text" name="username" class="form-control" placeholder="Nombre de usuario"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label id="password" class="form-label fw-bold">Contrasena</label>
+                        <input type="password" name="password" class="form-control" placeholder="Contrasena"/>
+                    </div>
+
+                    <input type="submit" class="btn btn-outline-primary w-100" name="submit" value="Ingresar" />
+
+                </form>
+
+                <hr />
+
+                <a th:href="@{/registro}" class="btn btn-success">Registrarse</a>
+
+            </div>
+        </div>
+    </section>
+
+
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

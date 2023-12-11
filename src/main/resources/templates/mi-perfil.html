@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi perfil</title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+</head>
+<body>
+
+    <header th:insert="~{fragments/menu :: menu-principal}"></header>
+
+    <main class="container">
+        <div class="row d-flex justify-content-center mb-4">
+            <div class="col-8">
+                <h3 class="text-center">Crear Publicacion</h3>
+
+                <form th:action="@{/mi-perfil}" method="post" th:object="${publicacion}">
+
+                    <div class="mb-3">
+                        <input type="text" th:field="*{titulo}" class="form-control" placeholder="Escribir un titulo"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <textarea th:field="*{descripcion}" id="editorPublicacion" rows="10"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="categoria" class="fw-bold mb-2">Seleccionar Categoria</label>
+                        <select id="categoria" th:field="*{categoria}" class="form-select d-inline">
+                            <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}" ></option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 d-flex justify-content-end">
+                        <input type="submit" class="btn btn-primary" value="Guardar" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <hr >
+
+        <a th:href="@{/logout}" class="btn btn-danger mb-3">Cerrar sesion</a>
+
+    </main>
+
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/tinymce/tinymce.min.js}"></script>
+
+    <script>
+        tinymce.init({
+            selector: "#editorPublicacion",
+            plugins: "textcolor, table lists code",
+            toolbar: " undo redo | bold italic | alignleft aligncenter alignright alignjustify \n\
+                        | bullist numlist outdent indent | forecolor backcolor table code"
+        });
+
+    </script>
+</body>
+</html>
